@@ -19,8 +19,8 @@
 :root {
    --text-primary: var(--color-gray-900);
    --text-secondary: var(--color-gray-700);
-   /* --text-link: var(--color-gray-700);
-   --text-link-hover: var(--color-gray-600); */
+    --text-link: var(--color-gray-700); 
+   --text-link-hover: var(--color-gray-600);
 }
 
 :root {
@@ -63,9 +63,9 @@
    --button-primary-active: var(--color-primary-active);
    --button-primary-disabled: var(--color-primary-disabled);
 
-   --button-secondary-bg: var(--color-gray-100);
+   --button-secondary-bg: #ffecba;
    --button-secondary-text: var(--text-primary);
-   --button-secondary-border: var(--border-primary);
+   --button-secondary-border: #e1af2b;
    --button-secondary-hover: var(--color-gray-200);
    --button-secondary-active: var(--color-gray-300);
    --button-secondary-disabled: var(--color-gray-200);
@@ -86,6 +86,4 @@
    --button-ghost-border: transparent;
    --button-ghost-hover: var(--color-gray-100);
    --button-ghost-active: var(--color-gray-200);
-
-   
 }

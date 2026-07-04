@@ -12,7 +12,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: "Каталог", path: "/catalog", icon: FaList },
-  { label: "Жанры", path: "/genres", icon: FaFire },
+  { label: "Страница", path: "/genres", icon: FaFire },
   { label: "Топ", path: "/top" },
   { label: "Новинки", path: "/new" },
   { label: "О нас", path: "/about" },

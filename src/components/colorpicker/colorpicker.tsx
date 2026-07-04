@@ -26,6 +26,7 @@ import clsx from "clsx";
 import { Tabs } from "@components/ui/tabs/tabs";
 import { TabApiToggle } from "@components/tabsElement/tabApiToggle/tabApiToggle";
 import { TabPresets } from "@components/tabsElement/tabPresets/tabPresets";
+import { TabExports } from "@components/tabsElement/tabExports/tabExports";
 
 export const ColorPickerUI = () => {
   const dispatch = useAppDispatch();
@@ -46,17 +47,12 @@ export const ColorPickerUI = () => {
     dispatch(applyColorEl());
   };
 
-  const handleElementSelect = (element: string) => {
-    dispatch(setElement(element as ElementValue));
-
-    // Если выбран root - сразу выбираем bg
-    if (element === "root") {
-      dispatch(setSubElement("bg"));
-    }
+  const handleElementSelect = (element: ElementValue) => {
+    setActiveElement(element);
+    dispatch(setElement(element));
+    dispatch(setSubElement("bg"));
   };
-  const panelToggleState = () => {
-    dispatch(setIsOpen())
-  }
+
   //Получаем массив элементов из Redux
   const elements = items.map((item) => ({
     key: item.key,
@@ -67,7 +63,6 @@ export const ColorPickerUI = () => {
   const subElements = [
     { key: "bg", label: "bg" },
     { key: "text", label: "text" },
-    { key: "blocks", label: "blocks" },
   ];
   // ✅ Получаем доступные свойства для текущего элемента
   const getAvailableProperties = () => {
@@ -78,7 +73,6 @@ export const ColorPickerUI = () => {
 
     const props = ["bg"];
     if (item.property.text !== undefined) props.push("text");
-    if (item.property.blocks !== undefined) props.push("blocks");
     return props;
   };
 
@@ -93,163 +87,214 @@ export const ColorPickerUI = () => {
     borderRadius: '5px',
   } as const;
 
-    const tabs = [
-      { id: "presets", label: "Пресеты", component: < TabPresets /> }, 
-      { id: "api", label: "Api", component: <TabApiToggle /> },
-    ];
+  const tabs = [
+    { id: "presets", label: "Пресеты", component: < TabPresets /> },
+    { id: "api", label: "Api", component: <TabApiToggle /> },
+    { id: "export", label: "Экспорт", component: <TabExports /> },
+    { id: "ui", label: "UI", component: <></> },
+  ];
+
+  const top = ["root", "header"];
+  const main = ["main", "li"];
+  const footer = ["footer"];
+
+  const topArray = elements.filter((item) => top.includes(item.key));
+  const mainArray = elements.filter((item) => main.includes(item.key));
+  const footerArray = elements.filter((item) => footer.includes(item.key));
+  const [activeElement, setActiveElement] = useState<ElementValue | null>(null);
 
   return (
     <div className={clsx(styles.wrapper, IsOpen && styles.open)}>
-      <div className={styles.top}>
-        <div className={styles.main}>
-          <h1 className={styles.title}>Цветовая панель</h1>
-          <Divider></Divider>
+      <div className={styles.main}>
+        <div className={styles.top}>
+          <div className={styles.colors}>
+            <h1 className={styles.title}>Цветовая панель</h1>
 
-          <div className={styles.part}>
-            <h2 className={styles.subtitle}>Выберите элемент:</h2>
-            <div className={styles.row} style={{ flexWrap: "wrap" }}>
-              {elements.map((el) => (
-                <Button
-                  key={el.key}
-                  size="small"
-                  onClick={() => handleElementSelect(el.key)}
-                >
-                  {el.label}
-                </Button>
-              ))}
-            </div>
-          </div>
+            <Divider></Divider>
 
-          <div className={styles.part}>
-            <p className={styles.subtitle}>Выберите свойство:</p>
-            <div className={styles.row}>
-              {subElements.map((sub) => {
-                const isAvailable = availableProps.includes(sub.key);
-                const isActive = currentSubEl === sub.key;
-
-                return (
-                  <Button
-                    key={sub.key}
-                    size="small"
-                    variant={isActive ? "primary" : "secondary"}
-                    onClick={() => {
-                      if (isAvailable) {
-                        dispatch(setSubElement(sub.key as PropertyValue));
-                      }
-                    }}
-                    disabled={!isAvailable}
-                    className={!isAvailable ? styles.disabled : ""}
-                  >
-                    {sub.label}
-                    {!isAvailable && " 🔒"}
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-
-          <Divider></Divider>
-
-          <div
-            className={clsx(`${styles.row}`, `${styles.grid}`)}
-            style={{ alignItems: "normal" }}
-          >
-            <HexAlphaColorPicker
-              className={styles.HexColorPicker}
-              color={color}
-              onChange={colorPickerHandler}
-            />
-            <div className={styles.presets}>
-              {panelColors.map((lastColor) => (
-                <div key={lastColor}>
-                  <Button
-                    variant="dot"
-                    color={lastColor}
-                    onClick={() => {
-                      setColor(lastColor);
-                      if (currentEl && currentSubEl) {
-                        dispatch(setColorEl(lastColor));
-                        dispatch(applyColorEl());
-                      }
-                    }}
-                  ></Button>
-                  <Button
-                    className={styles.deleteBtn}
-                    style={{ background: "transparent", border: "none" }}
-                    onClick={() => dispatch(deleteColorFromPanel(lastColor))}
-                  >
-                    x
-                  </Button>
+            <div className={styles.part}>
+              <h2 className={styles.subtitle}>Выберите элемент:</h2>
+              <div className={styles.row} style={{ flexFlow: 'column', alignItems: 'flex-start' }}>
+                <div className={styles.elems}>
+                  {topArray.map((el) => {
+                    return (
+                      <Button
+                        key={el.key}
+                        variant={activeElement === el.key ? "secondary" : "primary"}
+                        onClick={() => handleElementSelect(el.key)}
+                      >
+                        {el.label}
+                      </Button>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-            <Button
-              size="small"
-              className={styles.addColorBtn}
-              onClick={() => dispatch(addColorToPanel(color))}
-            >
-              Добавить цвет на панель
-            </Button>
-          </div>
-
-          <Divider></Divider>
-          <div className={styles.part} style={{ flexFlow: "row", gap: '5px' }}>
-            <div className={styles.row} style={{ flexWrap: "wrap" }}>
-              <p className={styles.subtitle}>Выбранные Элемент и Цвет:</p>
-              <p className={styles.currElements} style={{ display: 'flex', gap: '5px' }}>
-                {currentEl && <span>{currentEl}</span>}
-                {currentSubEl && <span>{currentSubEl}</span>}
-              </p>
-            </div>
-          </div>
-
-          <div className={styles.part}>
-            <div className={styles.row}>
-              <div className={styles.inputColor} style={{}}>
-                <input
-                  disabled
-                  type="color"
-                  onChange={() => colorPickerHandler}
-                  value={color}
-                />
+                <div className={styles.elems}>
+                  {mainArray.map((el) => {
+                    return (
+                      <Button
+                        key={el.key}
+                        variant={activeElement === el.key ? "secondary" : "primary"}
+                        onClick={() => handleElementSelect(el.key)}
+                      >
+                        {el.label}
+                      </Button>
+                    );
+                  })}
+                </div>
+                <div className={styles.elems}>
+                  {footerArray.map((el) => {
+                    return (
+                      <Button
+                        key={el.key}
+                        variant={activeElement === el.key ? "secondary" : "primary" }
+                        onClick={() => handleElementSelect(el.key)}
+                      >
+                        {el.label}
+                      </Button>
+                    );
+                  })}
+                </div>
               </div>
-              <div>{color}</div>
             </div>
-            <Button size="small" onClick={() => colorPickerHandler(color)}>
-              Применить текущий цвет
+
+            <div className={styles.part}>
+              <p className={styles.subtitle}>Выберите свойство:</p>
+              <div className={styles.row}>
+                {subElements.map((sub) => {
+                  const isAvailable = availableProps.includes(sub.key);
+                  const isActive = currentSubEl === sub.key;
+
+                  return (
+                    <Button
+                      key={sub.key}
+                      size="small"
+                      variant={isActive ? "secondary" : "primary"}
+                      onClick={() => {
+                        if (isAvailable) {
+                          dispatch(setSubElement(sub.key as PropertyValue));
+                        }
+                      }}
+                      disabled={!isAvailable}
+                      className={!isAvailable ? styles.disabled : ""}
+                    >
+                      {sub.label}
+                      {!isAvailable && " 🔒"}
+                    </Button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <Divider></Divider>
+
+            <div
+              className={clsx(`${styles.row}`, `${styles.grid}`)}
+              style={{ alignItems: "normal" }}
+            >
+              <HexAlphaColorPicker
+                className={styles.HexColorPicker}
+                color={color}
+                onChange={colorPickerHandler}
+              />
+              <div className={styles.presets}>
+                {panelColors.map((lastColor) => (
+                  <div key={lastColor}>
+                    <Button
+                      variant="dot"
+                      color={lastColor}
+                      onClick={() => {
+                        setColor(lastColor);
+                        if (currentEl && currentSubEl) {
+                          dispatch(setColorEl(lastColor));
+                          dispatch(applyColorEl());
+                        }
+                      }}
+                    ></Button>
+                    <Button
+                      className={styles.deleteBtn}
+                      style={{ background: "transparent", border: "none" }}
+                      onClick={() => dispatch(deleteColorFromPanel(lastColor))}
+                    >
+                      x
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              <Button
+                size="small"
+                className={styles.addColorBtn}
+                onClick={() => dispatch(addColorToPanel(color))}
+              >
+                Добавить цвет на панель
+              </Button>
+            </div>
+
+            <Divider></Divider>
+            <div className={styles.part} style={{ flexFlow: "row", gap: '5px' }}>
+              <div className={styles.row} style={{ flexWrap: "wrap" }}>
+                <p className={styles.subtitle}>Выбранные Элемент и Цвет:</p>
+                <p className={styles.currElements} style={{ display: "flex", gap: "5px" }}>
+                  {currentEl || currentSubEl ? (
+                    <>
+                      {currentEl && <span>{currentEl}</span>}
+                      {currentSubEl && <span>{currentSubEl}</span>}
+                    </>
+                  ) : (
+                    <span style={{ color: 'red', fontSize: '14px;' }}>Не выбрано</span>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.part}>
+              <div className={styles.row}>
+                <div className={styles.inputColor} style={{}}>
+                  <input
+                    disabled
+                    type="color"
+                    onChange={() => colorPickerHandler}
+                    value={color}
+                  />
+                </div>
+                <div>{color}</div>
+              </div>
+              <Button size="small" onClick={() => colorPickerHandler(color)}>
+                Применить текущий цвет
+              </Button>
+            </div>
+
+            <Divider></Divider>
+
+            <div className={styles.part}>
+              <div className={styles.row}>
+                <Tabs tabs={tabs} />
+              </div>
+            </div>
+
+          </div>
+
+          <div className={styles.actions}>
+            <Button
+              onClick={() => {
+                dispatch(addToLocalStorage());
+              }}
+            >
+              Сохранить
+            </Button>
+
+            <Button
+              onClick={() => {
+                dispatch(resetAllColors());
+                localStorage.removeItem("colorsDate");
+              }}
+            >
+              Сбросить
             </Button>
           </div>
-
-          <Divider></Divider>
-
-          <div className={styles.part}>
-            <div className={styles.row}>
-              <Tabs tabs={tabs} />
-            </div>
-          </div>
-
         </div>
-
-        <div className={styles.row}>
-          <Button
-            onClick={() => {
-              dispatch(addToLocalStorage());
-            }}
-          >
-            Сохранить
-          </Button>
-
-          <Button
-            onClick={() => {
-              dispatch(resetAllColors());
-              localStorage.removeItem("colorsDate");
-            }}
-          >
-            Сбросить
-          </Button>
-        </div>
+        <Button style={buttonToggleStyle} onClick={() => dispatch(setIsOpen())} >{IsOpen ? '>' : '<'}
+        </Button>
       </div>
-      <Button style={buttonToggleStyle} onClick={() => { dispatch(panelToggleState) }} >{IsOpen ? '>' : '<'}</Button>
     </div>
   );
 };

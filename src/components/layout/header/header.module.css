@@ -9,11 +9,13 @@
   width: 100%;
   grid-area: header;
   border: 1px solid var(--border);
-  background: var(--bg-header);
-  border-radius: 5px;
+  background: var(--header-bg);
+  border-radius: 5px;  
   height: 60px;
 }
-
+.header a {
+  color: var(--header-text);
+}
 .nav {
   display: flex;
   flex-flow: row nowrap;
@@ -22,26 +24,11 @@
   height: 100%;
   padding: 0 15px;
 }
-.ul {
-  display: flex;
-  flex-flow: row nowrap;
-  list-style: none;
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-}
 
 .actions {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.li a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--color-text);
 }
 
 .icon {

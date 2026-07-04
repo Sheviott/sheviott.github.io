@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type ElementValue = "root" | "header" | "main" | "footer";
-export type PropertyValue = "text" | "bg" | "blocks";
+export type ElementValue = "root" | "header" | "main" | "li" | "footer";
+export type PropertyValue = "text" | "bg" ;
 
 type PropertyElements = {
   bg: string | null;
   text?: string | null;
-  blocks?: string | null;
 };
 
 export type ColorItem = {
@@ -39,7 +38,13 @@ const itemsElement: ColorItem[] = [
     key: "main",
     label: "main",
     elem: "main",
-    property: { text: null, bg: null, blocks: null },
+    property: { text: null, bg: null },
+  },
+  {
+    key: "li",
+    label: "li",
+    elem: "li",
+    property: { text: null, bg: null},
   },
   {
     key: "footer",
@@ -50,7 +55,77 @@ const itemsElement: ColorItem[] = [
 ];
 const itemsPresets: ColorPresets[] = [
   {
-    color: "#FF8F41",
+    color: "#4CAF50",
+    design: [
+      {
+        key: "root",
+        label: "root",
+        elem: "root",
+        property: { bg: "#E8F5E9" },
+      },
+      {
+        key: "header",
+        label: "header",
+        elem: "header",
+        property: { text: "#1B5E20", bg: "#C8E6C9" },
+      },
+      {
+        key: "main",
+        label: "main",
+        elem: "main",
+        property: { text: "#2E7D32", bg: "#F1F8E9" },
+      },
+      {
+        key: "li",
+        label: "li",
+        elem: "li",
+        property: { text: "#1B5E20", bg: "#C8E6C9" },
+      },
+      {
+        key: "footer",
+        label: "footer",
+        elem: "footer",
+        property: { text: "#FFFFFF", bg: "#388E3C" },
+      },
+    ],
+  },
+  {
+    color: "#2196F3",
+    design: [
+      {
+        key: "root",
+        label: "root",
+        elem: "root",
+        property: { bg: "#E3F2FD" },
+      },
+      {
+        key: "header",
+        label: "header",
+        elem: "header",
+        property: { text: "#0D47A1", bg: "#BBDEFB" },
+      },
+      {
+        key: "main",
+        label: "main",
+        elem: "main",
+        property: { text: "#1565C0", bg: "#EAF4FD" },
+      },
+      {
+        key: "li",
+        label: "li",
+        elem: "li",
+        property: { text: "#0D47A1", bg: "#BBDEFB" },
+      },
+      {
+        key: "footer",
+        label: "footer",
+        elem: "footer",
+        property: { text: "#FFFFFF", bg: "#1976D2" },
+      },
+    ],
+  },
+  {
+    color: "#FF9800",
     design: [
       {
         key: "root",
@@ -62,135 +137,60 @@ const itemsPresets: ColorPresets[] = [
         key: "header",
         label: "header",
         elem: "header",
-        property: { text: "#B82940", bg: "#FFD8B5" },
+        property: { text: "#E65100", bg: "#FFE0B2" },
       },
       {
         key: "main",
         label: "main",
         elem: "main",
-        property: { text: "#7A3E1D", bg: "#FFF0E6", blocks: "#EEBA80" },
+        property: { text: "#BF360C", bg: "#FFF8E1" },
+      },
+      {
+        key: "li",
+        label: "li",
+        elem: "li",
+        property: { text: "#E65100", bg: "#FFE0B2" },
       },
       {
         key: "footer",
         label: "footer",
         elem: "footer",
-        property: { text: "#FFFFFF", bg: "#F84941" },
+        property: { text: "#FFFFFF", bg: "#F57C00" },
       },
     ],
   },
   {
-    color: "#EEBA80",
+    color: "#F44336",
     design: [
       {
         key: "root",
         label: "root",
         elem: "root",
-        property: { bg: "#FFF7ED" },
+        property: { bg: "#FFEBEE" },
       },
       {
         key: "header",
         label: "header",
         elem: "header",
-        property: { text: "#8A4B2A", bg: "#FDE3BF" },
+        property: { text: "#FFFFFF", bg: "#D32F2F" },
       },
       {
         key: "main",
         label: "main",
         elem: "main",
-        property: { text: "#5C341C", bg: "#FFF1DE", blocks: "#FFCD74" },
+        property: { text: "#B71C1C", bg: "#FFCDD2" },
+      },
+      {
+        key: "li",
+        label: "li",
+        elem: "li",
+        property: { text: "#FFFFFF", bg: "#EF5350" },
       },
       {
         key: "footer",
         label: "footer",
         elem: "footer",
-        property: { text: "#FFFFFF", bg: "#C96A3A" },
-      },
-    ],
-  },
-  {
-    color: "#F84941",
-    design: [
-      {
-        key: "root",
-        label: "root",
-        elem: "root",
-        property: { bg: "#FFF1F0" },
-      },
-      {
-        key: "header",
-        label: "header",
-        elem: "header",
-        property: { text: "#FFFFFF", bg: "#B82940" },
-      },
-      {
-        key: "main",
-        label: "main",
-        elem: "main",
-        property: { text: "#5B1F24", bg: "#FFE5E3", blocks: "#FF7251" },
-      },
-      {
-        key: "footer",
-        label: "footer",
-        elem: "footer",
-        property: { text: "#FFFFFF", bg: "#F84941" },
-      },
-    ],
-  },
-  {
-    color: "#B82940",
-    design: [
-      {
-        key: "root",
-        label: "root",
-        elem: "root",
-        property: { bg: "#FFF0F2" },
-      },
-      {
-        key: "header",
-        label: "header",
-        elem: "header",
-        property: { text: "#FFFFFF", bg: "#B82940" },
-      },
-      {
-        key: "main",
-        label: "main",
-        elem: "main",
-        property: { text: "#6F1D2A", bg: "#FCE4E6", blocks: "#E23F8B" },
-      },
-      {
-        key: "footer",
-        label: "footer",
-        elem: "footer",
-        property: { text: "#FFFFFF", bg: "#8F1F31" },
-      },
-    ],
-  },
-  {
-    color: "#E23F8B",
-    design: [
-      {
-        key: "root",
-        label: "root",
-        elem: "root",
-        property: { bg: "#FFF0F8" },
-      },
-      {
-        key: "header",
-        label: "header",
-        elem: "header",
-        property: { text: "#FFFFFF", bg: "#E23F8B" },
-      },
-      {
-        key: "main",
-        label: "main",
-        elem: "main",
-        property: { text: "#6A2342", bg: "#FDE3EF", blocks: "#FF8F41" },
-      },
-      {
-        key: "footer",
-        label: "footer",
-        elem: "footer",
-        property: { text: "#FFFFFF", bg: "#B82940" },
+        property: { text: "#FFFFFF", bg: "#C62828" },
       },
     ],
   },
@@ -257,6 +257,7 @@ const getPropertyByKey = (
   const item = getItemByKey(state, key);
   return item?.property;
 };
+// отображение элементов 
 
 export const colorPickerSlice = createSlice({
   name: "colorPicker",
@@ -264,25 +265,20 @@ export const colorPickerSlice = createSlice({
   reducers: {
     setElement: (state, action: PayloadAction<ElementValue>) => {
       state.currentEl = action.payload;
-      console.log("Выбран элемент:", action.payload);
     },
 
     setSubElement: (state, action: PayloadAction<PropertyValue>) => {
       state.currentSubEl = action.payload;
-      console.log("Выбран подэлемент:", action.payload);
     },
 
     setColorEl: (state, action: PayloadAction<string>) => {
       state.currentClr = action.payload;
-      console.log("Выбран цвет:", action.payload);
     },
     setItems: (state, action: PayloadAction<ColorItem[]>) => {
       state.items = action.payload;
-      console.log("цвета:", state.colorsPanel);
     },
     setColorPanel: (state, action: PayloadAction<string[]>) => {
       state.colorsPanel = action.payload;
-      console.log("Панель цветов:", state.colorsPanel);
     },
 
     applyColorEl: (state) => {
@@ -306,22 +302,7 @@ export const colorPickerSlice = createSlice({
         property.bg = currentClr;
       } else if (currentSubEl === "text") {
         property.text = currentClr;
-      } else if (currentSubEl === "blocks") {
-        // blocks - опциональное свойство, проверяем наличие
-        if (property.blocks !== undefined) {
-          property.blocks = currentClr;
-        } else {
-          console.warn(
-            `⚠️ Свойство "blocks" не определено для элемента "${currentEl}"`,
-          );
-          return;
-        }
       }
-      console.log("Применен цвет:", {
-        element: currentEl,
-        property: currentSubEl,
-        color: currentClr,
-      });
     },
     // =================================================
     // Панель цветов
@@ -370,7 +351,6 @@ export const colorPickerSlice = createSlice({
 
     //Сброс всех цветов
  resetAllColors: () => {
-  console.log(initialState)
   return defaultInitialState
  },
   },
@@ -430,10 +410,15 @@ export const colorPickerSlice = createSlice({
       const property = getPropertyByKey(state, "main");
       return property?.text ?? null;
     },
-    selectMainBlocks: (state) => {
-      const property = getPropertyByKey(state, "main");
-      return property?.blocks ?? null;
+    selectLiBg: (state) => {
+      const property = getPropertyByKey(state, "li");
+      return property?.bg ?? null;
     },
+    selectLiText: (state) => {
+      const property = getPropertyByKey(state, "li");
+      return property?.text ?? null;
+    },
+
 
     // 🔴 FOOTER
     selectFooterBg: (state) => {
@@ -494,7 +479,8 @@ export const {
   // Main
   selectMainBg,
   selectMainText,
-  selectMainBlocks,
+  selectLiBg,
+  selectLiText,
 
   // Footer
   selectFooterBg,

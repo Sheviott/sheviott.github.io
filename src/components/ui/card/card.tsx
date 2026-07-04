@@ -28,12 +28,11 @@ export const CardUI = () => {
       }
       );
   }, []);
-  console.log(animeList)
   if (loading) return <div>Загрузка аниме...</div>;
 
     for (let i = 0; i < 10; i++) {
       cards.push(
-        <div key={i} className={styles.card}>
+        <li key={i} className={styles.card}>
             <div className={styles.image}>
               {apiStatus ? 
               <div>
@@ -46,11 +45,13 @@ export const CardUI = () => {
                   <p className={styles.title}>{animeList[i].name.main}</p>
                   <p className={styles.description}>{animeList[i].description}</p>
               </div>
-                : <div className={styles.imageHidden}></div>
+                : <div className={styles.imageHidden}>
+                  Я не текст
+                </div>
                 }
             </div>
           {/* <div className={styles.title}>{animeList[i].name.main}</div> */}
-        </div>
+        </li>
       );
     }
   return cards

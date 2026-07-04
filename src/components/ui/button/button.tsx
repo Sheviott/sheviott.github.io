@@ -5,10 +5,11 @@ type ButtonSize = "small" | "medium" | "large";
 type ButtonVariant =
   | "primary"
   | "secondary"
-  | "dot"
   | "outline"
   | "ghost"
   | "danger"
+  | "dot"
+  | "tab"
 type ButtonType = {
   size?: ButtonSize;
   variant?: ButtonVariant;
@@ -21,7 +22,7 @@ type ButtonType = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = ({
-  size = "medium",
+  size = "small",
   variant = "primary",
   startIcon,
   endIcon,
@@ -42,8 +43,6 @@ export const Button = ({
     disabled && styles.disabled,
     color && styles.customColor,
     className,
-
-
   );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

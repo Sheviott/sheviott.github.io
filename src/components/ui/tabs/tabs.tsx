@@ -21,7 +21,7 @@ export const Tabs = ({ tabs }: TabsProps) => {
     <div className={styles.wrapper}>
       <div className={clsx(styles.tabsHeader, styles.scrollArea) }>
         {tabs.map((tab) => (
-          <Button size="small" variant="ghost" key={tab.id} onClick={() => setActiveTab(tab.id)}>
+          <Button size="small" variant="tab" key={tab.id} onClick={() => setActiveTab(tab.id)}>
             {tab.label}
           </Button>
         ))}
