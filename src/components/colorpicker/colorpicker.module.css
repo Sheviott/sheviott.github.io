@@ -1,29 +1,38 @@
 .wrapper {
   display: flex;
   flex-flow: column;
-  height: 100%;
+  background-color: var(--bg);
+  padding: 0px 15px;
+  border-right: 1px solid var(--border);
+  width: 340px; 
+  position: sticky;
+  height: 100dvh;
+  top: 0;
+  transition: all 0.5s ease 0s;
 }
 .title {
-  /* border: 1px solid var(--border-primary); */
   font-weight: 500;
-  font-size: 20px;
-  padding: 5px 15px 10px 15px ;
+  font-size: 18px;
+  padding: 10px 0px 5px 0;
 }
 .subtitle {
-  font-size: 18px;
-  padding: 10px 15px;
+  font-size: 16px;
 }
 .part {
   display: flex;
   flex-flow: column;
 }
-
+.top {
+  display: flex;
+    flex-flow: column;
+    height: 100%;
+}
 .row {
   display: flex;
   flex-flow: row nowrap;
   justify-content: start;
   align-items: center;
-  padding: 10px 0;
+  padding: 5px 0;
   row-gap: 10px;
   column-gap: 5px;
 }
@@ -38,7 +47,10 @@
 .inputColor input {
   width: 100%;
 }
-
+.currElements {
+  border-bottom: 1px solid black;
+  pointer-events: none;
+}
 .presets {
     display: flex;
     flex-flow: row wrap;
@@ -75,4 +87,9 @@
 }
 .deleteBtn span {
   line-height: 1.65;
+}
+
+.open {
+    position: absolute;
+    transform: translate(-100%, 0px);
 }

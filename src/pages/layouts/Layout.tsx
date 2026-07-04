@@ -8,6 +8,7 @@ import { selectMainBg, selectMainText, selectMainBlocks, selectRootBg } from "@s
 import { CSSProperties } from "react";
 
 export const Layout = () => {
+
   const mainBgStyles = useAppSelector(selectMainBg);
   const mainTxStyles = useAppSelector(selectMainText);
   const mainBlStyles = useAppSelector(selectMainBlocks);

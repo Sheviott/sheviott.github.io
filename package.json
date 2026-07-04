@@ -1,8 +1,20 @@
 {
   "name": "vite-project",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
+  "description": "Небольшой инструмент для быстрой настройки цветовой схемы сайта — помогает подбирать и тестировать цвета элементов прямо в браузере. Создан для упрощения работы над цветовым дизайном личного сайта.",
+  "homepage": "https://github.com/Sheviott/Color-Customizer-Site#readme",
+  "bugs": {
+    "url": "https://github.com/Sheviott/Color-Customizer-Site/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sheviott/Color-Customizer-Site.git"
+  },
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "eslint.config.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -24,7 +36,7 @@
     "react-router-dom": "^7.14.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.3",
+    "@eslint/js": "^9.39.4",
     "@mdx-js/react": "^3.1.1",
     "@storybook/addon-docs": "^10.2.19",
     "@storybook/mdx2-csf": "^1.1.0",
@@ -34,14 +46,14 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
-    "eslint": "^9.39.3",
+    "eslint": "^9.39.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "jiti": "^2.6.1",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.56.1",
+    "typescript-eslint": "^8.62.1",
     "vite": "^7.3.1"
   }
 }

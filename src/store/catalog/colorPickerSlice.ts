@@ -9,14 +9,15 @@ type PropertyElements = {
   blocks?: string | null;
 };
 
-type ColorItem = {
+export type ColorItem = {
   key: ElementValue;
   label: string;
   elem: ElementValue;
   property: PropertyElements;
 };
 type StoredColorsState = Partial<ColorsState>;
-type ColorPresets = {
+
+export type ColorPresets = {
   color: string;
   design: ColorItem[];
 };
@@ -202,7 +203,8 @@ type ColorsState = {
   currentEl: ElementValue | null;
   currentSubEl: PropertyValue | null;
   currentClr: string;
-  apiStatus: boolean
+  apiStatus: boolean,
+  isOpen: boolean
 };
 
 const getStoredState = (): StoredColorsState | null => {
@@ -226,6 +228,7 @@ const defaultInitialState : ColorsState = {
   currentSubEl: null,
   currentClr: "",
   apiStatus: false,
+  isOpen: false,
 };
 const initialState: ColorsState = {
   items: storedData?.items ?? defaultInitialState.items,
@@ -235,6 +238,7 @@ const initialState: ColorsState = {
   currentSubEl: storedData?.currentSubEl ?? defaultInitialState.currentSubEl,
   currentClr: storedData?.currentClr ?? defaultInitialState.currentClr,
   apiStatus: storedData?.apiStatus ?? defaultInitialState.apiStatus,
+  isOpen: storedData?.isOpen ?? defaultInitialState.isOpen,
 };
 
 // Получить элемент по ключу
@@ -354,6 +358,9 @@ export const colorPickerSlice = createSlice({
     setApiStatus: (state) => {
       state.apiStatus = !state.apiStatus;
     },
+    setIsOpen: (state) => {
+      state.isOpen = !state.isOpen;
+    },
     //Сброс выбора
     resetSelection: (state) => {
       state.currentEl = null;
@@ -398,6 +405,9 @@ export const colorPickerSlice = createSlice({
     },
     selectApiStatus: (state) => {
       return state.apiStatus
+    },
+    selectIsOpen: (state) => {
+      return state.isOpen
     },
 
     // 🔵 HEADER
@@ -452,7 +462,8 @@ export const {
   setColorsPreset,
   setItems,
   setColorPanel,
-  setApiStatus
+  setApiStatus,
+  setIsOpen
 } = colorPickerSlice.actions;
 
 export const {
@@ -472,6 +483,7 @@ export const {
   selectColorsHistory,
   selectColorsPresets,
   selectApiStatus,
+  selectIsOpen,
   // Root
   selectRootBg,
 

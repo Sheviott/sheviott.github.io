@@ -1,7 +1,14 @@
 import { ButtonHTMLAttributes, CSSProperties, ReactNode } from "react";
 import styles from "./button.module.css";
-type ButtonSize = "small" | "medium" | "large" ;
-type ButtonVariant = "primary" | "secondary" | 'dot' | "outline" | "ghost" | "danger";
+import clsx from "clsx";
+type ButtonSize = "small" | "medium" | "large";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "dot"
+  | "outline"
+  | "ghost"
+  | "danger"
 type ButtonType = {
   size?: ButtonSize;
   variant?: ButtonVariant;
@@ -27,8 +34,7 @@ export const Button = ({
   color,
   ...props
 }: ButtonType) => {
-
-  const buttonClasses = [
+  const buttonClasses = clsx(
     styles.button,
     styles[size],
     styles[variant],
@@ -36,7 +42,9 @@ export const Button = ({
     disabled && styles.disabled,
     color && styles.customColor,
     className,
-  ].filter(Boolean).join(' ');
+
+
+  );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) {
@@ -48,9 +56,9 @@ export const Button = ({
       onClick(event);
     }
   };
-    
+
   const customStyle: CSSProperties = {};
-  
+
   if (color) {
     customStyle.backgroundColor = color;
     customStyle.borderColor = "black";
@@ -72,5 +80,3 @@ export const Button = ({
 };
 
 export default Button;
-
-
