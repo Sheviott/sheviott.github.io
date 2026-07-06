@@ -1,11 +1,11 @@
 :root {
-  --card-bg: var(--color-primary);
+  --card-bg: #d9d9d9;
   --card-text: var(--text);
   --card-border: var(--border);
   --card-shadow: var(--shadow);
 }
 .card {
-  background-color: var(--bg);
+  background-color: var(--card-bg);
   border-radius: 5px;
   padding: 5px 10px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;

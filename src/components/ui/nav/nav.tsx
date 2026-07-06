@@ -1,4 +1,4 @@
-import { NavItem } from "@components/layout/header/header";
+import { NavItem } from "@components/header/header";
 import styles from "./nav.module.css";
 import { NavLink } from "react-router-dom";
 
@@ -12,7 +12,7 @@ export const Nav = ({nav}: NavProps) => {
           {nav.map((item) => {
             const Icon = item.icon;
             return (
-              <li key={item.path} className={styles.li}>
+              <li key={item.label} className={styles.li}>
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>

@@ -1,9 +1,9 @@
-import { ColorPresets } from "@store/catalog/colorPickerSlice";
+import { ColorPreset } from "@store/catalog/colorPickerSlice";
 import styles from "./presetPreview.module.css";
 
 type PresetProps = {
   onClick: () => void;
-  colors: ColorPresets;
+  colors: ColorPreset;
 };
 
 export const PresetPreview = ({ onClick, colors }: PresetProps) => {

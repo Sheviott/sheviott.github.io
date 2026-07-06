@@ -6,12 +6,12 @@ import {
   setSubElement,
   setColorEl,
   applyColorEl,
-  addColorToPanel,
-  deleteColorFromPanel,
+  addColorToPanelPins,
+  deleteColorFromPanelPins,
   selectCurrentEl,
   selectCurrentSubEl,
   selectAllItems,
-  selectColorsHistory,
+  selectColorsPins,
   resetAllColors,
   addToLocalStorage,
   PropertyValue,
@@ -35,7 +35,7 @@ export const ColorPickerUI = () => {
   const currentEl = useAppSelector(selectCurrentEl);
   const currentSubEl = useAppSelector(selectCurrentSubEl);
   const items = useAppSelector(selectAllItems);
-  const panelColors = useAppSelector(selectColorsHistory);
+  const colorsPins = useAppSelector(selectColorsPins);
 
   const IsOpen = useAppSelector(selectIsOpen);
 
@@ -88,10 +88,10 @@ export const ColorPickerUI = () => {
   } as const;
 
   const tabs = [
-    { id: "presets", label: "Пресеты", component: < TabPresets /> },
     { id: "api", label: "Api", component: <TabApiToggle /> },
+    { id: "presets", label: "Пресеты", component: < TabPresets /> },
     { id: "export", label: "Экспорт", component: <TabExports /> },
-    { id: "ui", label: "UI", component: <></> },
+    { id: "ui", label: "UI", component: <>В разработке</> },
   ];
 
   const top = ["root", "header"];
@@ -196,9 +196,9 @@ export const ColorPickerUI = () => {
                 color={color}
                 onChange={colorPickerHandler}
               />
-              <div className={styles.presets}>
-                {panelColors.map((lastColor) => (
-                  <div key={lastColor}>
+              <div className={styles.pins}>
+                {colorsPins.map((lastColor) => (
+                  <div key={lastColor} className={styles.pin}>
                     <Button
                       variant="dot"
                       color={lastColor}
@@ -213,7 +213,7 @@ export const ColorPickerUI = () => {
                     <Button
                       className={styles.deleteBtn}
                       style={{ background: "transparent", border: "none" }}
-                      onClick={() => dispatch(deleteColorFromPanel(lastColor))}
+                      onClick={() => dispatch(deleteColorFromPanelPins(lastColor))}
                     >
                       x
                     </Button>
@@ -223,7 +223,7 @@ export const ColorPickerUI = () => {
               <Button
                 size="small"
                 className={styles.addColorBtn}
-                onClick={() => dispatch(addColorToPanel(color))}
+                onClick={() => dispatch(addColorToPanelPins(color))}
               >
                 Добавить цвет на панель
               </Button>
@@ -240,7 +240,7 @@ export const ColorPickerUI = () => {
                       {currentSubEl && <span>{currentSubEl}</span>}
                     </>
                   ) : (
-                    <span style={{ color: 'red', fontSize: '14px;' }}>Не выбрано</span>
+                    <span style={{ color: 'red', fontSize: '14px' }}>Не выбрано</span>
                   )}
                 </p>
               </div>
@@ -267,7 +267,7 @@ export const ColorPickerUI = () => {
 
             <div className={styles.part}>
               <div className={styles.row}>
-                <Tabs tabs={tabs} />
+                <Tabs tabs={tabs} className={styles.tabs} />
               </div>
             </div>
 

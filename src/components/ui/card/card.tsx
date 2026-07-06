@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import styles from "./card.module.css";
 import { useAppSelector } from "@services/hooks";
 import { selectApiStatus } from "@store/catalog/colorPickerSlice";
+
 type AnimeItem = {
   poster: {
     src: string;
@@ -41,7 +42,7 @@ export const CardUI = () => {
             <div>
               <img
                 src={api + animeList[i].poster.src}
-                alt="Случайная картинка из API"
+                alt="Картинка из API"
                 className={styles.image}
                 loading="lazy"
               />

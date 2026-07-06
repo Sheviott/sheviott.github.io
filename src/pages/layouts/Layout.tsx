@@ -1,5 +1,5 @@
-import { Header } from "@components/layout/header/header";
-import { Footer } from "@components/layout/footer/footer";
+import { Header } from "@components/header/header";
+import { Footer } from "@components/footer/footer";
 import { Outlet } from "react-router-dom";
 import styles from "./layout.module.css";
 import { ColorPickerUI } from "@components/colorpicker/colorpicker";

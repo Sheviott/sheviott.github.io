@@ -12,13 +12,14 @@ type TabItem = {
 
 type TabsProps = {
   tabs: TabItem[];
+  className?: string;
 };
 
-export const Tabs = ({ tabs }: TabsProps) => {
+export const Tabs = ({ tabs, className,  }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(tabs[0]?.id);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={clsx(className, styles.wrapper)}>
       <div className={clsx(styles.tabsHeader, styles.scrollArea) }>
         {tabs.map((tab) => (
           <Button size="small" variant="tab" key={tab.id} onClick={() => setActiveTab(tab.id)}>

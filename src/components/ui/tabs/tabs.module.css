@@ -16,3 +16,7 @@
   border-right: none;
 }
 
+.tabsContent {
+  overflow: auto;
+  height: 100%;
+}

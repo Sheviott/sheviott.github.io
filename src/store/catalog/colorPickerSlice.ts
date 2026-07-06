@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 
 export type ElementValue = "root" | "header" | "main" | "li" | "footer";
-export type PropertyValue = "text" | "bg" ;
+export type PropertyValue = "text" | "bg";
 
 type PropertyElements = {
   bg: string | null;
@@ -16,8 +16,8 @@ export type ColorItem = {
 };
 type StoredColorsState = Partial<ColorsState>;
 
-export type ColorPresets = {
-  color: string;
+export type ColorPreset = {
+  id: string;
   design: ColorItem[];
 };
 
@@ -44,7 +44,7 @@ const itemsElement: ColorItem[] = [
     key: "li",
     label: "li",
     elem: "li",
-    property: { text: null, bg: null},
+    property: { text: null, bg: null },
   },
   {
     key: "footer",
@@ -53,9 +53,9 @@ const itemsElement: ColorItem[] = [
     property: { text: null, bg: null },
   },
 ];
-const itemsPresets: ColorPresets[] = [
+const itemsPresets: ColorPreset[] = [
   {
-    color: "#4CAF50",
+    id: "#4CAF50",
     design: [
       {
         key: "root",
@@ -90,7 +90,7 @@ const itemsPresets: ColorPresets[] = [
     ],
   },
   {
-    color: "#2196F3",
+    id: "#2196F3",
     design: [
       {
         key: "root",
@@ -125,7 +125,7 @@ const itemsPresets: ColorPresets[] = [
     ],
   },
   {
-    color: "#FF9800",
+    id: "#FF9800",
     design: [
       {
         key: "root",
@@ -160,7 +160,7 @@ const itemsPresets: ColorPresets[] = [
     ],
   },
   {
-    color: "#F44336",
+    id: "#F44336",
     design: [
       {
         key: "root",
@@ -199,7 +199,7 @@ const itemsPresets: ColorPresets[] = [
 type ColorsState = {
   items: ColorItem[];
   colorsPanel: string[];
-  colorsPresets: ColorPresets[];
+  colorsPresets: ColorPreset[];
   currentEl: ElementValue | null;
   currentSubEl: PropertyValue | null;
   currentClr: string;
@@ -220,9 +220,9 @@ const getStoredState = (): StoredColorsState | null => {
 
 const storedData = getStoredState();
 
-const defaultInitialState : ColorsState = {
+const defaultInitialState: ColorsState = {
   items: itemsElement,
-  colorsPanel: ["#000", "#fff"],
+  colorsPanel: ["#000000", "#ffffff"],
   colorsPresets: itemsPresets,
   currentEl: null,
   currentSubEl: null,
@@ -305,37 +305,63 @@ export const colorPickerSlice = createSlice({
       }
     },
     // =================================================
-    // Панель цветов
+    // Панель закреплённых цветов
     // =================================================
-    addColorToPanel: (state, action: PayloadAction<string>) => {
+    addColorToPanelPins: (state, action: PayloadAction<string>) => {
       if (state.colorsPanel.includes(action.payload)) return;
       if (state.colorsPanel.length >= 12) return;
       state.colorsPanel.push(action.payload);
     },
-    deleteColorFromPanel: (state, action: PayloadAction<string>) => {
+    deleteColorFromPanelPins: (state, action: PayloadAction<string>) => {
       state.colorsPanel = state.colorsPanel.filter(
         (color) => color !== action.payload,
       );
     },
+    // =================================================
+    // =================================================
 
+
+    // =================================================
+    // Пресеты 
+    // =================================================
+
+    // по клику применяем стили пресета
+    // исп. в файле tabPresets
+    setColorsPreset: (state, action: PayloadAction<string>) => {
+      const preset = state.colorsPresets.find(
+        (item) => item.id === action.payload
+      );
+      if (!preset) return;
+
+      state.items = preset.design;
+    },
+
+    // Добавить пресет на панель
+    addColorsPreset: {
+      reducer: (state, action: PayloadAction<ColorPreset>) => {
+        state.colorsPresets.push(action.payload);
+      },
+      prepare(design: ColorItem[]) {
+        return {
+          payload: {
+            id: nanoid(),
+            design,
+          } as ColorPreset,
+        };
+      },
+    },
+
+    // =================================================
+    // =================================================
     // !перенeсти
     addToLocalStorage: (state) => {
       const siteData = state
-      localStorage.setItem( "colorsDate", 
+      localStorage.setItem("colorsDate",
         JSON.stringify(siteData),
       );
     },
 
-    setColorsPreset: (state, action: PayloadAction<string>) => {
-      const preset = state.colorsPresets.find((item) => item.color == action.payload)
-      const design = preset?.design;
-      if (!design) return;
-      state.items = design;
-    },
-    addColorsPreset: (state, action: PayloadAction<string>) => {
-      if (state.colorsPresets.length >= 12) return;
-      state.colorsPanel.push(action.payload);
-    },
+
     setApiStatus: (state) => {
       state.apiStatus = !state.apiStatus;
     },
@@ -350,9 +376,9 @@ export const colorPickerSlice = createSlice({
     },
 
     //Сброс всех цветов
- resetAllColors: () => {
-  return defaultInitialState
- },
+    resetAllColors: () => {
+      return defaultInitialState
+    },
   },
   selectors: {
     //Все элементы
@@ -373,7 +399,7 @@ export const colorPickerSlice = createSlice({
       return getPropertyByKey(state, key);
     },
 
-    selectColorsHistory: (state) => {
+    selectColorsPins: (state) => {
       return state.colorsPanel;
     },
     selectColorsPresets: (state) => {
@@ -436,8 +462,10 @@ export const {
   setElement,
   setSubElement,
   setColorEl,
-  addColorToPanel,
-  deleteColorFromPanel,
+  // 
+  addColorToPanelPins,
+  deleteColorFromPanelPins,
+  // 
   applyColorEl,
   resetSelection,
   resetAllColors,
@@ -445,6 +473,7 @@ export const {
   addToLocalStorage,
   //
   setColorsPreset,
+  addColorsPreset,
   setItems,
   setColorPanel,
   setApiStatus,
@@ -465,7 +494,7 @@ export const {
   selectPropertyByKey,
 
   //
-  selectColorsHistory,
+  selectColorsPins,
   selectColorsPresets,
   selectApiStatus,
   selectIsOpen,
