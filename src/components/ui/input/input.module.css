@@ -5,7 +5,7 @@
   --input-shadow: var(--shadow-sm);
 
    --input-bg: var(--color-white);
-   --input-text: var(--text-primary);
+   --input-text: var(--text);
    --input-border: var(--border-primary);
    --input-placeholder: var(--text-muted);
    --input-focus-border: var(--border-focus);

@@ -3,22 +3,38 @@ import { Nav } from "@components/ui/nav/nav";
 import styles from "./header.module.css";
 import { selectHeaderBg, selectHeaderText } from "@store/catalog/colorPickerSlice";
 import { useAppSelector } from "@services/hooks";
-import { CSSProperties } from "react";
+import type { IconType } from "react-icons";
+import { FaList, FaFire } from "react-icons/fa";
+
+export type NavItem = {
+    label: string;
+    path: string;
+    icon?: IconType;
+  };
 
 export const Header = () => {
   const headerBgStyles = useAppSelector(selectHeaderBg);
   const headerTxStyles = useAppSelector(selectHeaderText);
-  
- const headerStyle: CSSProperties = {
-    backgroundColor: headerBgStyles || 'var(--header-bg, #2563eb)',
-    color: headerTxStyles || 'var(--header-text, #ffffff)',
-    transition: 'all 0.2s ease',
-  };
+
+  const headerStyle = {
+    "--header-text": headerTxStyles,
+    "--header-bg": headerBgStyles,
+  } as React.CSSProperties
+
+
+  const navItems: NavItem[] = [
+    { label: "Каталог", path: "/catalog", icon: FaList },
+    { label: "Страница", path: "/page", icon: FaFire },
+    { label: "Топ", path: "/" },
+    { label: "Новинки", path: "/" },
+    { label: "О нас", path: "/" },
+  ];
+
   return (
     <header className={styles.header} style={headerStyle}>
       <nav className={styles.nav}>
         {/* <Logo /> */}
-        <Nav />
+        <Nav nav={navItems} />
         <div className={styles.actions}>
           <div>
             <a>Закладки</a>

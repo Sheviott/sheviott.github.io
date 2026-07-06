@@ -1,8 +1,4 @@
 @import './colors.css';
-/* @import './typography.css';
-@import './spacing.css';
-@import './shadows.css';
-@import './animations.css'; */
 
 :root {
    --breakpoint-xs: 0px;
@@ -12,80 +8,21 @@
    --breakpoint-xl: 1280px;
    --breakpoint-2xl: 1536px;
 
-   --container-padding-mobile: var(--spacing-4);
-   --container-padding-tablet: var(--spacing-6);
-   --container-padding-desktop: var(--spacing-8);
-}
-:root {
-   --text-primary: var(--color-gray-900);
-   --text-secondary: var(--color-gray-700);
-   /* --text-link: var(--color-gray-700);
-   --text-link-hover: var(--color-gray-600); */
-}
+   --container-padding-mobile: 15px;
+   --container-padding-tablet: 15px;
+   --container-padding-desktop: 15px;
 
-:root {
-   --bg-primary: var(--color-primary);
-}
-:root {
-   --border-primary: var(--color-gray-300);
+   --text: var(--color-gray-900);
+   --bg: #f3f3f3;
+   --border: var(--color-gray-300);
    --border-hover: var(--color-gray-400);
    --border-focus: var(--color-gray-400);
    --border-disabled: var(--color-gray-200);
-}
 
+}
 :root {
    --primary: var(--color-primary);
    --secondary: var(--color-secondary);
-   --success: var(--color-success);
-   --warning: var(--color-warning);
-   --danger: var(--color-danger);
-   --info: var(--color-info);
-
-   --text: var(--text-primary);
-   --text-secondary: var(--text-secondary);
-
-   --bg: var(--bg-primary);
-
-   --border: var(--border-primary);
-   --radius: var(--radius-md);
-   --shadow: var(--shadow-md);
 }
 
-:root {
-   --button-font: var(--font-family-base);
-   --button-radius: var(--radius-md);
-   --button-shadow: var(--shadow-sm);
 
-   --button-primary-bg: var(--color-primary);
-   --button-primary-text: var(--color-gray-900);
-   --button-primary-border: var(--border-primary);
-   --button-primary-hover: var(--color-primary-dark);
-   --button-primary-active: var(--color-primary-active);
-   --button-primary-disabled: var(--color-primary-disabled);
-
-   --button-secondary-bg: var(--color-gray-100);
-   --button-secondary-text: var(--text-primary);
-   --button-secondary-border: var(--border-primary);
-   --button-secondary-hover: var(--color-gray-200);
-   --button-secondary-active: var(--color-gray-300);
-   --button-secondary-disabled: var(--color-gray-200);
-
-   --button-danger-bg: var(--color-danger);
-   --button-danger-text: var(--color-white);
-   --button-danger-border: var(--border-primary);
-   --button-danger-hover: var(--color-danger-dark);
-   --button-danger-active: var(--color-danger-dark);
-
-   --button-success-bg: var(--color-success);
-   --button-success-text: var(--color-white);
-   --button-success-border: var(--border-primary);
-   --button-success-hover: var(--color-success-dark);
-
-   --button-ghost-bg: transparent;
-   --button-ghost-text: var(--text-primary);
-   --button-ghost-border: transparent;
-   --button-ghost-hover: var(--color-gray-100);
-   --button-ghost-active: var(--color-gray-200);
-
-   
-}

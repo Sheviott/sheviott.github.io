@@ -1,15 +1,14 @@
 :root {
-  --footer-bg: var(--bg-inverse);
-  --footer-text: var(--text-inverse);
   --footer-border: var(--border-inverse);
   --footer-padding: var(--spacing-6);
 }
+
 .footer {
   width: 100%;
   margin: 0px auto;
   grid-area: footer;
   border: 1px solid var(--border);
-  background-color: var(--bg-footer);
+  background-color: var(--footer-bg);
   border-radius: 5px;
   height: 60px;
 }
@@ -21,4 +20,7 @@
   height: 100%;
   width: 100%;
   padding: 0 15px;
+}
+.footer p {
+  color: var(--footer-text)
 }

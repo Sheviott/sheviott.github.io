@@ -1,34 +1,32 @@
 :root {
-  --main-bg: var(--bg-secondary);
-  --main-text: var(--text-primary);
-  --main-padding: var(--spacing-6);
+--root-bg: var(----bg-primary);
+--main-text: var(--text);
+--main-bg: var(--bg-primary);
+--li-bg: var(--card-bg);
+--li-text: var(--text);
 }
 .wrapper {
   display: flex;
   flex-direction: row;
   min-height: 100dvh;
   column-gap: 15px;
+  background-color: var(--root-bg);
 }
 .main {
   flex: 1 1 auto;
   padding: 15px;
+  color: var(--main-text);
+  background-color: var(--main-bg);
 }
-.colorPicker {
-  background-color: var(--bg);
-  padding: 0px 15px;
-  border-right: 1px solid var(--border);
-  max-width: 340px; 
-  /* ? динамический размер? */
-  position: sticky;
-    height: 100dvh;
-    display: block;
-    top: 0;
-    z-index: 10;
-}
+
 .mainblock {
   display: flex;
   flex-flow: column;
   flex: 1 1 auto;
   column-gap: 15px;
   padding: 0 15px;
+}
+.outlet li {
+background-color: var(--li-bg);
+color: var(--li-text);
 }

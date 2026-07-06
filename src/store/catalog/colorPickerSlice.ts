@@ -1,23 +1,23 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 
-export type ElementValue = "root" | "header" | "main" | "footer";
-export type PropertyValue = "text" | "bg" | "blocks";
+export type ElementValue = "root" | "header" | "main" | "li" | "footer";
+export type PropertyValue = "text" | "bg";
 
 type PropertyElements = {
   bg: string | null;
   text?: string | null;
-  blocks?: string | null;
 };
 
-type ColorItem = {
+export type ColorItem = {
   key: ElementValue;
   label: string;
   elem: ElementValue;
   property: PropertyElements;
 };
 type StoredColorsState = Partial<ColorsState>;
-type ColorPresets = {
-  color: string;
+
+export type ColorPreset = {
+  id: string;
   design: ColorItem[];
 };
 
@@ -38,7 +38,13 @@ const itemsElement: ColorItem[] = [
     key: "main",
     label: "main",
     elem: "main",
-    property: { text: null, bg: null, blocks: null },
+    property: { text: null, bg: null },
+  },
+  {
+    key: "li",
+    label: "li",
+    elem: "li",
+    property: { text: null, bg: null },
   },
   {
     key: "footer",
@@ -47,9 +53,79 @@ const itemsElement: ColorItem[] = [
     property: { text: null, bg: null },
   },
 ];
-const itemsPresets: ColorPresets[] = [
+const itemsPresets: ColorPreset[] = [
   {
-    color: "#FF8F41",
+    id: "#4CAF50",
+    design: [
+      {
+        key: "root",
+        label: "root",
+        elem: "root",
+        property: { bg: "#E8F5E9" },
+      },
+      {
+        key: "header",
+        label: "header",
+        elem: "header",
+        property: { text: "#1B5E20", bg: "#C8E6C9" },
+      },
+      {
+        key: "main",
+        label: "main",
+        elem: "main",
+        property: { text: "#2E7D32", bg: "#F1F8E9" },
+      },
+      {
+        key: "li",
+        label: "li",
+        elem: "li",
+        property: { text: "#1B5E20", bg: "#C8E6C9" },
+      },
+      {
+        key: "footer",
+        label: "footer",
+        elem: "footer",
+        property: { text: "#FFFFFF", bg: "#388E3C" },
+      },
+    ],
+  },
+  {
+    id: "#2196F3",
+    design: [
+      {
+        key: "root",
+        label: "root",
+        elem: "root",
+        property: { bg: "#E3F2FD" },
+      },
+      {
+        key: "header",
+        label: "header",
+        elem: "header",
+        property: { text: "#0D47A1", bg: "#BBDEFB" },
+      },
+      {
+        key: "main",
+        label: "main",
+        elem: "main",
+        property: { text: "#1565C0", bg: "#EAF4FD" },
+      },
+      {
+        key: "li",
+        label: "li",
+        elem: "li",
+        property: { text: "#0D47A1", bg: "#BBDEFB" },
+      },
+      {
+        key: "footer",
+        label: "footer",
+        elem: "footer",
+        property: { text: "#FFFFFF", bg: "#1976D2" },
+      },
+    ],
+  },
+  {
+    id: "#FF9800",
     design: [
       {
         key: "root",
@@ -61,135 +137,60 @@ const itemsPresets: ColorPresets[] = [
         key: "header",
         label: "header",
         elem: "header",
-        property: { text: "#B82940", bg: "#FFD8B5" },
+        property: { text: "#E65100", bg: "#FFE0B2" },
       },
       {
         key: "main",
         label: "main",
         elem: "main",
-        property: { text: "#7A3E1D", bg: "#FFF0E6", blocks: "#EEBA80" },
+        property: { text: "#BF360C", bg: "#FFF8E1" },
+      },
+      {
+        key: "li",
+        label: "li",
+        elem: "li",
+        property: { text: "#E65100", bg: "#FFE0B2" },
       },
       {
         key: "footer",
         label: "footer",
         elem: "footer",
-        property: { text: "#FFFFFF", bg: "#F84941" },
+        property: { text: "#FFFFFF", bg: "#F57C00" },
       },
     ],
   },
   {
-    color: "#EEBA80",
+    id: "#F44336",
     design: [
       {
         key: "root",
         label: "root",
         elem: "root",
-        property: { bg: "#FFF7ED" },
+        property: { bg: "#FFEBEE" },
       },
       {
         key: "header",
         label: "header",
         elem: "header",
-        property: { text: "#8A4B2A", bg: "#FDE3BF" },
+        property: { text: "#FFFFFF", bg: "#D32F2F" },
       },
       {
         key: "main",
         label: "main",
         elem: "main",
-        property: { text: "#5C341C", bg: "#FFF1DE", blocks: "#FFCD74" },
+        property: { text: "#B71C1C", bg: "#FFCDD2" },
+      },
+      {
+        key: "li",
+        label: "li",
+        elem: "li",
+        property: { text: "#FFFFFF", bg: "#EF5350" },
       },
       {
         key: "footer",
         label: "footer",
         elem: "footer",
-        property: { text: "#FFFFFF", bg: "#C96A3A" },
-      },
-    ],
-  },
-  {
-    color: "#F84941",
-    design: [
-      {
-        key: "root",
-        label: "root",
-        elem: "root",
-        property: { bg: "#FFF1F0" },
-      },
-      {
-        key: "header",
-        label: "header",
-        elem: "header",
-        property: { text: "#FFFFFF", bg: "#B82940" },
-      },
-      {
-        key: "main",
-        label: "main",
-        elem: "main",
-        property: { text: "#5B1F24", bg: "#FFE5E3", blocks: "#FF7251" },
-      },
-      {
-        key: "footer",
-        label: "footer",
-        elem: "footer",
-        property: { text: "#FFFFFF", bg: "#F84941" },
-      },
-    ],
-  },
-  {
-    color: "#B82940",
-    design: [
-      {
-        key: "root",
-        label: "root",
-        elem: "root",
-        property: { bg: "#FFF0F2" },
-      },
-      {
-        key: "header",
-        label: "header",
-        elem: "header",
-        property: { text: "#FFFFFF", bg: "#B82940" },
-      },
-      {
-        key: "main",
-        label: "main",
-        elem: "main",
-        property: { text: "#6F1D2A", bg: "#FCE4E6", blocks: "#E23F8B" },
-      },
-      {
-        key: "footer",
-        label: "footer",
-        elem: "footer",
-        property: { text: "#FFFFFF", bg: "#8F1F31" },
-      },
-    ],
-  },
-  {
-    color: "#E23F8B",
-    design: [
-      {
-        key: "root",
-        label: "root",
-        elem: "root",
-        property: { bg: "#FFF0F8" },
-      },
-      {
-        key: "header",
-        label: "header",
-        elem: "header",
-        property: { text: "#FFFFFF", bg: "#E23F8B" },
-      },
-      {
-        key: "main",
-        label: "main",
-        elem: "main",
-        property: { text: "#6A2342", bg: "#FDE3EF", blocks: "#FF8F41" },
-      },
-      {
-        key: "footer",
-        label: "footer",
-        elem: "footer",
-        property: { text: "#FFFFFF", bg: "#B82940" },
+        property: { text: "#FFFFFF", bg: "#C62828" },
       },
     ],
   },
@@ -198,11 +199,12 @@ const itemsPresets: ColorPresets[] = [
 type ColorsState = {
   items: ColorItem[];
   colorsPanel: string[];
-  colorsPresets: ColorPresets[];
+  colorsPresets: ColorPreset[];
   currentEl: ElementValue | null;
   currentSubEl: PropertyValue | null;
   currentClr: string;
-  apiStatus: boolean
+  apiStatus: boolean,
+  isOpen: boolean
 };
 
 const getStoredState = (): StoredColorsState | null => {
@@ -218,14 +220,15 @@ const getStoredState = (): StoredColorsState | null => {
 
 const storedData = getStoredState();
 
-const defaultInitialState : ColorsState = {
+const defaultInitialState: ColorsState = {
   items: itemsElement,
-  colorsPanel: ["#000", "#fff"],
+  colorsPanel: ["#000000", "#ffffff"],
   colorsPresets: itemsPresets,
   currentEl: null,
   currentSubEl: null,
   currentClr: "",
   apiStatus: false,
+  isOpen: false,
 };
 const initialState: ColorsState = {
   items: storedData?.items ?? defaultInitialState.items,
@@ -235,6 +238,7 @@ const initialState: ColorsState = {
   currentSubEl: storedData?.currentSubEl ?? defaultInitialState.currentSubEl,
   currentClr: storedData?.currentClr ?? defaultInitialState.currentClr,
   apiStatus: storedData?.apiStatus ?? defaultInitialState.apiStatus,
+  isOpen: storedData?.isOpen ?? defaultInitialState.isOpen,
 };
 
 // Получить элемент по ключу
@@ -253,6 +257,7 @@ const getPropertyByKey = (
   const item = getItemByKey(state, key);
   return item?.property;
 };
+// отображение элементов 
 
 export const colorPickerSlice = createSlice({
   name: "colorPicker",
@@ -260,25 +265,20 @@ export const colorPickerSlice = createSlice({
   reducers: {
     setElement: (state, action: PayloadAction<ElementValue>) => {
       state.currentEl = action.payload;
-      console.log("Выбран элемент:", action.payload);
     },
 
     setSubElement: (state, action: PayloadAction<PropertyValue>) => {
       state.currentSubEl = action.payload;
-      console.log("Выбран подэлемент:", action.payload);
     },
 
     setColorEl: (state, action: PayloadAction<string>) => {
       state.currentClr = action.payload;
-      console.log("Выбран цвет:", action.payload);
     },
     setItems: (state, action: PayloadAction<ColorItem[]>) => {
       state.items = action.payload;
-      console.log("цвета:", state.colorsPanel);
     },
     setColorPanel: (state, action: PayloadAction<string[]>) => {
       state.colorsPanel = action.payload;
-      console.log("Панель цветов:", state.colorsPanel);
     },
 
     applyColorEl: (state) => {
@@ -302,57 +302,71 @@ export const colorPickerSlice = createSlice({
         property.bg = currentClr;
       } else if (currentSubEl === "text") {
         property.text = currentClr;
-      } else if (currentSubEl === "blocks") {
-        // blocks - опциональное свойство, проверяем наличие
-        if (property.blocks !== undefined) {
-          property.blocks = currentClr;
-        } else {
-          console.warn(
-            `⚠️ Свойство "blocks" не определено для элемента "${currentEl}"`,
-          );
-          return;
-        }
       }
-      console.log("Применен цвет:", {
-        element: currentEl,
-        property: currentSubEl,
-        color: currentClr,
-      });
     },
     // =================================================
-    // Панель цветов
+    // Панель закреплённых цветов
     // =================================================
-    addColorToPanel: (state, action: PayloadAction<string>) => {
+    addColorToPanelPins: (state, action: PayloadAction<string>) => {
       if (state.colorsPanel.includes(action.payload)) return;
       if (state.colorsPanel.length >= 12) return;
       state.colorsPanel.push(action.payload);
     },
-    deleteColorFromPanel: (state, action: PayloadAction<string>) => {
+    deleteColorFromPanelPins: (state, action: PayloadAction<string>) => {
       state.colorsPanel = state.colorsPanel.filter(
         (color) => color !== action.payload,
       );
     },
+    // =================================================
+    // =================================================
 
+
+    // =================================================
+    // Пресеты 
+    // =================================================
+
+    // по клику применяем стили пресета
+    // исп. в файле tabPresets
+    setColorsPreset: (state, action: PayloadAction<string>) => {
+      const preset = state.colorsPresets.find(
+        (item) => item.id === action.payload
+      );
+      if (!preset) return;
+
+      state.items = preset.design;
+    },
+
+    // Добавить пресет на панель
+    addColorsPreset: {
+      reducer: (state, action: PayloadAction<ColorPreset>) => {
+        state.colorsPresets.push(action.payload);
+      },
+      prepare(design: ColorItem[]) {
+        return {
+          payload: {
+            id: nanoid(),
+            design,
+          } as ColorPreset,
+        };
+      },
+    },
+
+    // =================================================
+    // =================================================
     // !перенeсти
     addToLocalStorage: (state) => {
       const siteData = state
-      localStorage.setItem( "colorsDate", 
+      localStorage.setItem("colorsDate",
         JSON.stringify(siteData),
       );
     },
 
-    setColorsPreset: (state, action: PayloadAction<string>) => {
-      const preset = state.colorsPresets.find((item) => item.color == action.payload)
-      const design = preset?.design;
-      if (!design) return;
-      state.items = design;
-    },
-    addColorsPreset: (state, action: PayloadAction<string>) => {
-      if (state.colorsPresets.length >= 12) return;
-      state.colorsPanel.push(action.payload);
-    },
+
     setApiStatus: (state) => {
       state.apiStatus = !state.apiStatus;
+    },
+    setIsOpen: (state) => {
+      state.isOpen = !state.isOpen;
     },
     //Сброс выбора
     resetSelection: (state) => {
@@ -362,10 +376,9 @@ export const colorPickerSlice = createSlice({
     },
 
     //Сброс всех цветов
- resetAllColors: () => {
-  console.log(initialState)
-  return defaultInitialState
- },
+    resetAllColors: () => {
+      return defaultInitialState
+    },
   },
   selectors: {
     //Все элементы
@@ -386,7 +399,7 @@ export const colorPickerSlice = createSlice({
       return getPropertyByKey(state, key);
     },
 
-    selectColorsHistory: (state) => {
+    selectColorsPins: (state) => {
       return state.colorsPanel;
     },
     selectColorsPresets: (state) => {
@@ -398,6 +411,9 @@ export const colorPickerSlice = createSlice({
     },
     selectApiStatus: (state) => {
       return state.apiStatus
+    },
+    selectIsOpen: (state) => {
+      return state.isOpen
     },
 
     // 🔵 HEADER
@@ -420,10 +436,15 @@ export const colorPickerSlice = createSlice({
       const property = getPropertyByKey(state, "main");
       return property?.text ?? null;
     },
-    selectMainBlocks: (state) => {
-      const property = getPropertyByKey(state, "main");
-      return property?.blocks ?? null;
+    selectLiBg: (state) => {
+      const property = getPropertyByKey(state, "li");
+      return property?.bg ?? null;
     },
+    selectLiText: (state) => {
+      const property = getPropertyByKey(state, "li");
+      return property?.text ?? null;
+    },
+
 
     // 🔴 FOOTER
     selectFooterBg: (state) => {
@@ -441,8 +462,10 @@ export const {
   setElement,
   setSubElement,
   setColorEl,
-  addColorToPanel,
-  deleteColorFromPanel,
+  // 
+  addColorToPanelPins,
+  deleteColorFromPanelPins,
+  // 
   applyColorEl,
   resetSelection,
   resetAllColors,
@@ -450,9 +473,11 @@ export const {
   addToLocalStorage,
   //
   setColorsPreset,
+  addColorsPreset,
   setItems,
   setColorPanel,
-  setApiStatus
+  setApiStatus,
+  setIsOpen
 } = colorPickerSlice.actions;
 
 export const {
@@ -469,9 +494,10 @@ export const {
   selectPropertyByKey,
 
   //
-  selectColorsHistory,
+  selectColorsPins,
   selectColorsPresets,
   selectApiStatus,
+  selectIsOpen,
   // Root
   selectRootBg,
 
@@ -482,7 +508,8 @@ export const {
   // Main
   selectMainBg,
   selectMainText,
-  selectMainBlocks,
+  selectLiBg,
+  selectLiText,
 
   // Footer
   selectFooterBg,

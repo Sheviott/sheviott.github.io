@@ -1,30 +1,18 @@
+import { NavItem } from "@components/header/header";
 import styles from "./nav.module.css";
 import { NavLink } from "react-router-dom";
-import { FaList, FaFire } from "react-icons/fa";
 
-import type { IconType } from "react-icons";
-
-type NavItem = {
-  label: string;
-  path: string;
-  icon?: IconType;
+type NavProps = {
+  nav: NavItem[];
 };
 
-const navItems: NavItem[] = [
-  { label: "Каталог", path: "/catalog", icon: FaList },
-  { label: "Жанры", path: "/genres", icon: FaFire },
-  { label: "Топ", path: "/top" },
-  { label: "Новинки", path: "/new" },
-  { label: "О нас", path: "/about" },
-];
-
-export const Nav = () => {
+export const Nav = ({nav}: NavProps) => {
   return (
         <ul className={styles.ul}>
-          {navItems.map((item) => {
+          {nav.map((item) => {
             const Icon = item.icon;
             return (
-              <li key={item.path} className={styles.li}>
+              <li key={item.label} className={styles.li}>
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>

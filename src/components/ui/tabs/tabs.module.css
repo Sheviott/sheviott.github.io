@@ -1,0 +1,22 @@
+.tabsHeader {
+  /* border: 1px solid #000; */
+  overflow-x: auto;
+  display: flex;
+  flex-flow: row;
+}
+.wrapper {
+  width: 100%;
+}
+.tabsHeader button {
+  border: 1px solid black;
+  border-radius: 0px;
+  width: 100%;
+}
+.tabsHeader button:not(:last-child) {
+  border-right: none;
+}
+
+.tabsContent {
+  overflow: auto;
+  height: 100%;
+}
