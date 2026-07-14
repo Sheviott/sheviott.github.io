@@ -23,11 +23,8 @@ export const Header = () => {
 
 
   const navItems: NavItem[] = [
-    { label: "Каталог", path: "/catalog", icon: FaList },
-    { label: "Страница", path: "/page", icon: FaFire },
-    { label: "Топ", path: "/" },
-    { label: "Новинки", path: "/" },
-    { label: "О нас", path: "/" },
+    { label: "Каталог", path: "/", icon: FaList },
+    { label: "Блог", path: "/blog", icon: FaFire },
   ];
 
   return (

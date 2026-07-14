@@ -1,6 +1,6 @@
 name: Deploy to GitHub Pages
 
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: Deploy to GitHub Pages
 
 on:
   push:
