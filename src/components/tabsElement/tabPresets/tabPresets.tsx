@@ -8,12 +8,13 @@ export const TabPresets = () => {
 const items = useAppSelector(selectAllItems);
   const colorsPreset = useAppSelector(selectColorsPresets);
   const dispatch = useAppDispatch();
+  console.log(colorsPreset);
   return (
     <div className={styles.presets}>
       <Button onClick={() => {dispatch(addColorsPreset(items))}}>Добавить пресет</Button>
       <div className={styles.row}>
-        {colorsPreset.map((item) => (
-          <PresetPreview key={item.id} colors={item} onClick={() => { dispatch(setColorsPreset(item.id)) }} />
+        {colorsPreset.map((item, index) => (
+          <PresetPreview key={index} colors={item} onClick={() => { dispatch(setColorsPreset(item.id)) }} />
         ))}
       </div>
     </div>

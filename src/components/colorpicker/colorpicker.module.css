@@ -107,8 +107,6 @@
   transform: translate(-100%, 0px);
 }
 .tabs {
-  height: 215px;
-  overflow: hidden;
 }
 
 .actions {

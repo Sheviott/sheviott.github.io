@@ -204,7 +204,8 @@ type ColorsState = {
   currentSubEl: PropertyValue | null;
   currentClr: string;
   apiStatus: boolean,
-  isOpen: boolean
+  isOpen: boolean,
+  isLoading: boolean
 };
 
 const getStoredState = (): StoredColorsState | null => {
@@ -229,6 +230,7 @@ const defaultInitialState: ColorsState = {
   currentClr: "",
   apiStatus: false,
   isOpen: false,
+  isLoading: false,
 };
 const initialState: ColorsState = {
   items: storedData?.items ?? defaultInitialState.items,
@@ -239,6 +241,7 @@ const initialState: ColorsState = {
   currentClr: storedData?.currentClr ?? defaultInitialState.currentClr,
   apiStatus: storedData?.apiStatus ?? defaultInitialState.apiStatus,
   isOpen: storedData?.isOpen ?? defaultInitialState.isOpen,
+  isLoading: storedData?.isLoading ?? defaultInitialState.isLoading,
 };
 
 // Получить элемент по ключу
@@ -331,8 +334,9 @@ export const colorPickerSlice = createSlice({
       const preset = state.colorsPresets.find(
         (item) => item.id === action.payload
       );
-      if (!preset) return;
+      console.log(action.payload)
 
+      if (!preset) return;
       state.items = preset.design;
     },
 
@@ -367,6 +371,9 @@ export const colorPickerSlice = createSlice({
     },
     setIsOpen: (state) => {
       state.isOpen = !state.isOpen;
+    },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
     },
     //Сброс выбора
     resetSelection: (state) => {
@@ -414,6 +421,9 @@ export const colorPickerSlice = createSlice({
     },
     selectIsOpen: (state) => {
       return state.isOpen
+    },
+    selectIsLoading: (state) => {
+      return state.isLoading
     },
 
     // 🔵 HEADER
@@ -477,7 +487,8 @@ export const {
   setItems,
   setColorPanel,
   setApiStatus,
-  setIsOpen
+  setIsOpen,
+  setIsLoading
 } = colorPickerSlice.actions;
 
 export const {
@@ -498,6 +509,7 @@ export const {
   selectColorsPresets,
   selectApiStatus,
   selectIsOpen,
+  selectIsLoading,
   // Root
   selectRootBg,
 
