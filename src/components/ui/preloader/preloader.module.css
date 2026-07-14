@@ -1,0 +1,20 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000ab;
+}
+
+.image {
+  margin: 0px auto;
+  max-width: 160px;
+  max-height: 330px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

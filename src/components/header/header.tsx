@@ -25,6 +25,7 @@ export const Header = () => {
   const navItems: NavItem[] = [
     { label: "Каталог", path: "/", icon: FaList },
     { label: "Блог", path: "/blog", icon: FaFire },
+    { label: "Страница с котиком", path: "/cat", icon: FaFire },
   ];
 
   return (

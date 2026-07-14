@@ -2,9 +2,10 @@ import { useAppSelector } from "@services/hooks";
 import { selectApiStatus } from "@store/catalog/colorPickerSlice";
 type CheckboxProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  children: React.ReactNode;
 };
 
-export const Checkbox = ({ onChange } : CheckboxProps)  => {
+export const Checkbox = ({ onChange, children } : CheckboxProps)  => {
   const checked = useAppSelector(selectApiStatus);
 
   return (
@@ -14,7 +15,7 @@ export const Checkbox = ({ onChange } : CheckboxProps)  => {
         checked={checked}
         onChange={onChange}
       />
-      <span>Чекбокс</span>
+      <span>{children}</span>
     </label>
   );
 };

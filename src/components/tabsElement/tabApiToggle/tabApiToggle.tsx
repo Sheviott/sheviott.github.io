@@ -7,11 +7,12 @@ export const TabApiToggle = () => {
     const dispatch = useAppDispatch();
   return (
     <div className={styles.wrapper}>
-      <Checkbox
-        onChange={() => {
-          dispatch(setApiStatus());
-        }}
-      />
+      <Checkbox onChange={() => { dispatch(setApiStatus())}}>
+        АнимеAPI 
+        </Checkbox>
+      {/* <Checkbox onChange={() => {}}>
+        Посмотреть Loader
+      </Checkbox> */}
     </div>
   );
 };
